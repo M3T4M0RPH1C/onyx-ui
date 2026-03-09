@@ -212,10 +212,10 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				Fusion.peek(OnFocus)()
 			end
 		end,
-		[OnEvent "FocusLost"] = function()
+		[OnEvent "FocusLost"] = function(enterPressed, inputThatCausedFocusLoss)
 			Focusing:set(false)
 
-			Fusion.peek(OnFocusEnd)()
+			Fusion.peek(OnFocusEnd)(enterPressed, inputThatCausedFocusLoss)
 		end,
 		[OnEvent "MouseEnter"] = function()
 			if not Fusion.peek(Disabled) then
