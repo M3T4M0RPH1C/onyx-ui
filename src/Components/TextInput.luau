@@ -20,6 +20,8 @@
 	.MultiLine boolean? -- Whether the text input supports multiple lines.
 	.TextSize number? -- The size of the text.
 	.TextColor3 Color3? -- The color of the text.
+	.TextStrokeColor3 Color3? -- The color of the text's stoke
+	.TextStrokeTransparency Color3? -- The Transparency of the text's stoke
 	.FontFace Font? -- The font face of the text.
 	.PlaceholderColor3 Color3? -- The color of the placeholder text.
 	.TextXAlignment Enum.TextXAlignment? -- The horizontal alignment of the text.
@@ -58,6 +60,8 @@ export type Props = Base.Props & {
 	MultiLine: Fusion.UsedAs<boolean>?,
 	TextSize: Fusion.UsedAs<number>?,
 	TextColor3: Fusion.UsedAs<Color3>?,
+	TextStrokeColor3: Fusion.UsedAs<Color3>?,
+	TextStrokeTransparency: Fusion.UsedAs<number>?,
 	FontFace: Fusion.UsedAs<Font>?,
 	PlaceholderColor3: Fusion.UsedAs<Color3>?,
 	TextXAlignment: Fusion.UsedAs<Enum.TextXAlignment>?,
@@ -95,6 +99,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			return Use(Theme.Colors.BaseContent.Main)
 		end)
 	)
+	local TextStrokeColor3 = Util.Fallback(Props.TextStrokeColor3, Theme.Colors.Accent.Main)
+	local TextStrokeTransparency = Util.Fallback(Props.TextStrokeTransparency, 1)
 	local FontFace = Util.Fallback(Props.FontFace, Scope:Font(Theme.Font.Body, Theme.FontWeight.Body))
 	local TextXAlignment = Util.Fallback(Props.TextXAlignment, Enum.TextXAlignment.Left)
 	local TextYAlignment = Util.Fallback(Props.TextYAlignment, Enum.TextYAlignment.Top)
@@ -152,7 +158,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						return Use(Theme.Colors.NeutralContent.Dark)
 					end
 				end),
-				Theme.SpringSpeed["1"],
+				Theme.SpringSpeed.Immediate,
 				Theme.SpringDampening["1"]
 			),
 			Transparency = Scope:Spring(
@@ -166,7 +172,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						return 0.6
 					end
 				end),
-				Theme.SpringSpeed["1"],
+				Theme.SpringSpeed.Immediate,
 				Theme.SpringDampening["1"]
 			),
 		},
@@ -190,6 +196,21 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			Theme.SpringSpeed.Immediate,
 			Theme.SpringDampening["1"]
 		),
+		TextStrokeColor3 = Scope:Spring(
+			Scope:Computed(function(Use)
+				return Use(TextStrokeColor3)
+			end),
+			Theme.SpringSpeed["1"],
+			Theme.SpringDampening["1"]
+		),
+		TextStrokeTransparency = Scope:Spring(
+			Scope:Computed(function(Use)
+				return Use(TextStrokeTransparency)
+			end),
+			Theme.SpringSpeed["1"],
+			Theme.SpringDampening["1"]
+		),
+
 		TextSize = TextSize,
 		FontFace = FontFace,
 		PlaceholderColor3 = PlaceholderColor3,
