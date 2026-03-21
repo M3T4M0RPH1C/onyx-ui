@@ -21,7 +21,7 @@
 	.TextSize number? -- The size of the text.
 	.TextColor3 Color3? -- The color of the text.
 	.TextStrokeColor3 Color3? -- The color of the text's stoke
-	.TextStrokeTransparency Color3? -- The Transparency of the text's stoke
+	.TextStrokeTransparency number? -- The Transparency of the text's stoke
 	.FontFace Font? -- The font face of the text.
 	.PlaceholderColor3 Color3? -- The color of the placeholder text.
 	.TextXAlignment Enum.TextXAlignment? -- The horizontal alignment of the text.
@@ -158,7 +158,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						return Use(Theme.Colors.NeutralContent.Dark)
 					end
 				end),
-				Theme.SpringSpeed.Immediate,
+				Theme.SpringSpeed["1"],
 				Theme.SpringDampening["1"]
 			),
 			Transparency = Scope:Spring(
@@ -172,7 +172,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						return 0.6
 					end
 				end),
-				Theme.SpringSpeed.Immediate,
+				Theme.SpringSpeed["1"],
 				Theme.SpringDampening["1"]
 			),
 		},
